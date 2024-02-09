@@ -91,11 +91,6 @@ const MainMap = () => {
     });
     new H.mapevents.Behavior(new H.mapevents.MapEvents(mapRef.current));
 
-    const resizeHandler = () => {
-      mapRef.current?.getViewPort().resize();
-    };
-    targetRef.current.addEventListener("resize", resizeHandler);
-
     H.ui.UI.createDefault(mapRef.current, defaultLayers);
     router.current.calculateRoute(
       routingParameters,
@@ -106,8 +101,18 @@ const MainMap = () => {
         alert(error.message);
       },
     );
+  }, []);
+  useEffect(() => {
+    if (!mapRef.current || !targetRef.current) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      mapRef.current?.getViewPort().resize();
+    });
+    resizeObserver.observe(targetRef.current);
     return () => {
-      targetRef.current?.removeEventListener("resize", resizeHandler);
+      resizeObserver.disconnect();
     };
   }, []);
   return (

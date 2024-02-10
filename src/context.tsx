@@ -1,7 +1,9 @@
 import { createContext, ReactNode, useState } from "react";
 
 type Route = {
-  text: string;
+  name: string;
+  address: string;
+  location: { lat: number; lng: number };
 }[];
 
 export const RouteContext = createContext<

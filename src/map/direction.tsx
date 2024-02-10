@@ -1,24 +1,26 @@
 import { DirectionsRenderer, DirectionsService } from "@react-google-maps/api";
-import { useCallback, useState } from "react";
+import { FC, useCallback, useState } from "react";
+
+import { TLocation } from "../@types/location";
 
 const isApiResponseOk = (i: unknown) => {
   return (i as { status: string })?.status === "OK";
 };
 
-export default function Direction() {
-  const origin = { lat: 42.755955, lng: 141.32816 };
-  // 始点を指定する
-  const destination = { lat: 45.299023, lng: 141.65308 };
-  // 終点を指定する
-  const transitPoints = [
-    {
-      location: { lat: 43.66406, lng: 142.85445 },
-      stopover: true,
-    },
-    { location: { lat: 43.906742, lng: 144.79872 } },
-    { location: { lat: 43.286533, lng: 143.18524 } },
-  ];
-  // 経由地を（順不同で）指定する
+type TProps = {
+  origin: TLocation;
+  destination: TLocation;
+  transitPoints: TLocation[];
+};
+
+const Direction: FC<TProps> = ({
+  origin,
+  destination,
+  transitPoints: _transitPoints,
+}) => {
+  const transitPoints: google.maps.DirectionsWaypoint[] = _transitPoints.map(
+    (point) => ({ location: point }),
+  );
 
   const [currentDirection, setCurrentDirection] = useState<
     google.maps.DirectionsResult | undefined
@@ -64,7 +66,7 @@ export default function Direction() {
         }}
         callback={directionsCallback}
       />
-      {currentDirection !== null && (
+      {currentDirection && (
         <DirectionsRenderer
           options={{
             directions: currentDirection,
@@ -75,4 +77,6 @@ export default function Direction() {
       )}
     </>
   );
-}
+};
+
+export { Direction };

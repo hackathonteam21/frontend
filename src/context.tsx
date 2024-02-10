@@ -1,15 +1,11 @@
 import { createContext, ReactNode, useState } from "react";
-
-type Route = {
-  text: string;
-}[];
+import { PersonData } from "./types";
 
 export const RouteContext = createContext<
-  [Route, (route: Route) => void] | undefined
+  [PersonData[], (addresses: PersonData[]) => void] | undefined
 >(undefined);
-
 export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
-  const routeState = useState<Route>([]);
+  const routeState = useState<PersonData[]>([]);
   return (
     <RouteContext.Provider value={routeState}>{children}</RouteContext.Provider>
   );

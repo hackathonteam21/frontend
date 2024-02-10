@@ -15,14 +15,7 @@ export function AddressListDisplay({
       <h2>名前/住所</h2>
       <ul style={{ listStyle: "none", padding: 0 }}>
         {addressData.map((item, index) => (
-          <li
-            key={index}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <li key={index} className={styles.listItem}>
             <div>
               <span>{item.fullName}</span>{" "}
               <span style={{ marginLeft: "30px" }}>{item.address}</span>

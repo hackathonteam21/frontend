@@ -15,14 +15,7 @@ export function SelectedAddressList({
       <h2>コース</h2>
       <ul>
         {selectedAddresses.map((address, index) => (
-          <li
-            key={index}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <li key={index} className={styles.listItem}>
             <span>
               {address.fullName} - {address.address}
             </span>

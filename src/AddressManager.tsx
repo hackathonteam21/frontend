@@ -1,7 +1,8 @@
-import { useState } from "react";
 import { AddressInputForm } from "./AddressInputForm";
 import { AddressListDisplay } from "./AddressListDisplay";
 import { SelectedAddressList } from "./SelectedAddressList";
+import { useContext } from "react";
+import { RouteContext } from "./context";
 import { PersonData } from "./types";
 
 const addressData = [
@@ -11,13 +12,16 @@ const addressData = [
 ];
 
 export default function AddressManager() {
-  const [selectedAddresses, setSelectedAddresses] = useState<PersonData[]>([]);
+  //const [selectedAddresses, setSelectedAddresses] = useState<PersonData[]>([]);
+  const context = useContext(RouteContext);
+  if (!context) return;
+  const [selectedAddresses, setSelectedAddresses] = context;
 
   const handleSelectAddress = (address: PersonData) => {
     const isAlreadyAdded = selectedAddresses.some(
       (selectedAddress) =>
         selectedAddress.fullName === address.fullName &&
-        selectedAddress.address === address.address,
+        selectedAddress.address === address.address
     );
 
     if (isAlreadyAdded) {
@@ -25,11 +29,15 @@ export default function AddressManager() {
       return;
     }
 
-    setSelectedAddresses((prev) => [...prev, address]);
+    setSelectedAddresses((prev: PersonData[]) => [...prev, address]);
+    //setSelectedAddresses([...selectedAddresses, address]);
   };
 
   const handleRemoveAddress = (index: number) => {
-    setSelectedAddresses((prev) => prev.filter((_, i) => i !== index));
+    //setSelectedAddresses((prev) => prev.filter((_, i) => i !== index));
+    setSelectedAddresses((prev: PersonData[]) =>
+      prev.filter((_, i: number) => i !== index)
+    );
   };
 
   return (

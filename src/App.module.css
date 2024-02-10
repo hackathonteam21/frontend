@@ -10,6 +10,12 @@
   border: 1px solid #ccc;
 }
 
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .button {
   margin-top: 10px;
   background-color: #007bff;

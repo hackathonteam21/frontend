@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import styles from "./App.module.css";
-import { Position } from "./types";
+
+type PositionForPost = {
+  name: string;
+  address: string;
+  location: { lat: number; lng: number };
+};
 
 export function AddressInputForm() {
   const [name, setName] = useState("");
@@ -23,8 +28,8 @@ export function AddressInputForm() {
       if (data.status === "OK") {
         const { lat, lng } = data.results[0].geometry.location;
 
-        const postUrl = "ここにURLを挿入"; // データベースのエンドポイントURL(？)
-        const positionData: Position = {
+        const postUrl = "ここにAPIのURLを挿入";
+        const positionData: PositionForPost = {
           name,
           address,
           location: { lat, lng },

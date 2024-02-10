@@ -39,6 +39,24 @@ export function AddressListDisplay() {
     }
   };
 
+  const handleRemovePosition = async (id: number) => {
+    const deleteApiUrl = `ここにAPIのURLを挿入/${id}`;
+    try {
+      const response = await fetch(deleteApiUrl, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("データの削除に失敗しました。");
+      }
+      setAddressData((prevData) => prevData.filter((item) => item.id !== id));
+      setSelectedPositions((prevPositions) =>
+        prevPositions.filter((item) => item.id !== id)
+      );
+    } catch (error) {
+      console.error("データ削除中にエラーが発生しました:", error);
+    }
+  };
+
   const handleConfirmClick = () => {
     setSelectedAddresses(selectedPositions);
     setSelectedPositions([]);
@@ -57,12 +75,18 @@ export function AddressListDisplay() {
                 type="checkbox"
                 onChange={(e) => handleCheckboxChange(item, e.target.checked)}
               />
+              <button
+                className={`${styles.button} ${styles.deleteButton}`}
+                onClick={() => handleRemovePosition(index)}
+              >
+                削除
+              </button>
             </div>
           </li>
         ))}
       </ul>
       <button className={styles.button} onClick={handleConfirmClick}>
-        確定
+        コースを検索
       </button>
     </div>
   );

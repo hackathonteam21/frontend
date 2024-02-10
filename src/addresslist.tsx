@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import styles from "./App.module.css";
-import { useContext } from "react";
-import { RouteContext } from "./context";
-import { Position } from "./types";
 
-export function AddressListDisplay() {
+type Position = {
+  id: number;
+  name: string;
+  address: string;
+  location: { lat: number; lng: number };
+};
+
+type AddressListDisplayProps = {
+  onSelect: (selectedAddresses: Position[]) => void;
+};
+
+export function AddressListDisplay({ onSelect }: AddressListDisplayProps) {
   const [addressData, setAddressData] = useState<Position[]>([]);
-  const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
-  const context = useContext(RouteContext);
-  if (!context) return;
-  const [selectedAddresses, setSelectedAddresses] = context;
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchAddressData = async () => {
@@ -29,19 +34,20 @@ export function AddressListDisplay() {
     fetchAddressData();
   }, []);
 
-  const handleCheckboxChange = (position: Position, isChecked: boolean) => {
+  const handleCheckboxChange = (id: number, isChecked: boolean) => {
     if (isChecked) {
-      setSelectedPositions((prevPositions) => [...prevPositions, position]);
+      setSelectedIds((prevIds) => [...prevIds, id]);
     } else {
-      setSelectedPositions((prevPositions) =>
-        prevPositions.filter((prevPosition) => prevPosition !== position)
-      );
+      setSelectedIds((prevIds) => prevIds.filter((prevId) => prevId !== id));
     }
   };
 
   const handleConfirmClick = () => {
-    setSelectedAddresses(selectedPositions);
-    setSelectedPositions([]);
+    const selectedAddresses = addressData.filter(
+      (item) => selectedIds.includes(item.id) // 仮定: Position型には一意のidプロパティが存在する
+    );
+    onSelect(selectedAddresses);
+    setSelectedIds([]);
   };
 
   return (
@@ -55,7 +61,9 @@ export function AddressListDisplay() {
               <span style={{ marginLeft: "30px" }}>{item.address}</span>
               <input
                 type="checkbox"
-                onChange={(e) => handleCheckboxChange(item, e.target.checked)}
+                onChange={(e) =>
+                  handleCheckboxChange(item.id, e.target.checked)
+                }
               />
             </div>
           </li>

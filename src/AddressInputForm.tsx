@@ -46,7 +46,7 @@ export function AddressInputForm() {
         throw new Error("住所の変換に失敗しました。");
       }
     } catch (error) {
-      console.error("データ取得中にエラーが発生しました:", error);
+      console.error("データの送信中にエラーが発生しました:", error);
     }
   };
 

@@ -1,15 +1,19 @@
 import { Position } from "./types";
 import styles from "./App.module.css";
+import { useContext } from "react";
+import { RouteContext } from "./context";
 
-type SelectedAddressListProps = {
-  selectedAddresses: Position[];
-  onRemove: (index: number) => void;
-};
+export function SelectedAddressList() {
+  const context = useContext(RouteContext);
+  if (!context) return;
+  const [selectedAddresses, setSelectedAddresses] = context;
 
-export function SelectedAddressList({
-  selectedAddresses,
-  onRemove,
-}: SelectedAddressListProps) {
+  const handleRemoveAddress = (index: number) => {
+    setSelectedAddresses((prev: Position[]) =>
+      prev.filter((_, i: number) => i !== index)
+    );
+  };
+
   return (
     <div className={styles.container}>
       <h2>コース</h2>
@@ -21,7 +25,7 @@ export function SelectedAddressList({
             </span>
             <button
               className={`${styles.button} ${styles.deleteButton}`}
-              onClick={() => onRemove(index)}
+              onClick={() => handleRemoveAddress(index)}
             >
               削除
             </button>

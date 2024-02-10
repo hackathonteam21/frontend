@@ -3,13 +3,7 @@ import { AddressListDisplay } from "./AddressListDisplay";
 import { SelectedAddressList } from "./SelectedAddressList";
 import { useContext } from "react";
 import { RouteContext } from "./context";
-import { PersonData } from "./types";
-
-const addressData = [
-  { fullName: "田中 太郎", address: "東京都新宿区..." },
-  { fullName: "山田 花子", address: "大阪府大阪市..." },
-  { fullName: "佐藤 次郎", address: "北海道札幌市..." },
-];
+import { Position } from "./types";
 
 export default function AddressManager() {
   //const [selectedAddresses, setSelectedAddresses] = useState<PersonData[]>([]);
@@ -17,10 +11,10 @@ export default function AddressManager() {
   if (!context) return;
   const [selectedAddresses, setSelectedAddresses] = context;
 
-  const handleSelectAddress = (address: PersonData) => {
+  const handleSelectAddress = (address: Position) => {
     const isAlreadyAdded = selectedAddresses.some(
       (selectedAddress) =>
-        selectedAddress.fullName === address.fullName &&
+        selectedAddress.name === address.name &&
         selectedAddress.address === address.address
     );
 
@@ -29,13 +23,13 @@ export default function AddressManager() {
       return;
     }
 
-    setSelectedAddresses((prev: PersonData[]) => [...prev, address]);
+    setSelectedAddresses((prev: Position[]) => [...prev, address]);
     //setSelectedAddresses([...selectedAddresses, address]);
   };
 
   const handleRemoveAddress = (index: number) => {
     //setSelectedAddresses((prev) => prev.filter((_, i) => i !== index));
-    setSelectedAddresses((prev: PersonData[]) =>
+    setSelectedAddresses((prev: Position[]) =>
       prev.filter((_, i: number) => i !== index)
     );
   };
@@ -47,10 +41,7 @@ export default function AddressManager() {
         onRemove={handleRemoveAddress}
       />
       <AddressInputForm />
-      <AddressListDisplay
-        addressData={addressData}
-        onSelect={handleSelectAddress}
-      />
+      <AddressListDisplay onSelect={handleSelectAddress} />
     </>
   );
 }

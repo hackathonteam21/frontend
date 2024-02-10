@@ -1,8 +1,8 @@
-import { PersonData } from "./types";
+import { Position } from "./types";
 import styles from "./App.module.css";
 
 type SelectedAddressListProps = {
-  selectedAddresses: PersonData[];
+  selectedAddresses: Position[];
   onRemove: (index: number) => void;
 };
 
@@ -17,7 +17,7 @@ export function SelectedAddressList({
         {selectedAddresses.map((address, index) => (
           <li key={index} className={styles.listItem}>
             <span>
-              {address.fullName} - {address.address}
+              {address.name} - {address.address}
             </span>
             <button
               className={`${styles.button} ${styles.deleteButton}`}

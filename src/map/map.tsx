@@ -6,8 +6,8 @@ import { useContext } from "react";
 import { RouteContext, SettingsContext } from "../context.tsx";
 
 const center = {
-  lat: -3.745,
-  lng: -38.523,
+  lat: 35.6812362,
+  lng: 139.7645445,
 };
 
 const MainMap = () => {

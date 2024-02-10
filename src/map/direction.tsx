@@ -1,5 +1,5 @@
 import { DirectionsRenderer, DirectionsService } from "@react-google-maps/api";
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback } from "react";
 
 import { TLocation } from "../@types/location";
 
@@ -11,20 +11,20 @@ type TProps = {
   origin: TLocation;
   destination: TLocation;
   transitPoints: TLocation[];
+  directions?: google.maps.DirectionsResult;
+  setDirections: (direction: google.maps.DirectionsResult) => void;
 };
 
 const Direction: FC<TProps> = ({
   origin,
   destination,
   transitPoints: _transitPoints,
+  directions,
+  setDirections,
 }) => {
   const transitPoints: google.maps.DirectionsWaypoint[] = _transitPoints.map(
     (point) => ({ location: point }),
   );
-
-  const [currentDirection, setCurrentDirection] = useState<
-    google.maps.DirectionsResult | undefined
-  >(undefined);
 
   const directionsCallback = useCallback<
     (result: google.maps.DirectionsResult | null) => void
@@ -35,14 +35,14 @@ const Direction: FC<TProps> = ({
         return;
       }
       if (
-        currentDirection?.geocoded_waypoints?.length ===
+        directions?.geocoded_waypoints?.length ===
         googleResponse.geocoded_waypoints?.length
       ) {
         return;
       }
-      setCurrentDirection(googleResponse);
+      setDirections(googleResponse);
     },
-    [currentDirection],
+    [directions],
   );
 
   return (
@@ -57,10 +57,10 @@ const Direction: FC<TProps> = ({
         }}
         callback={directionsCallback}
       />
-      {currentDirection && (
+      {directions && (
         <DirectionsRenderer
           options={{
-            directions: currentDirection,
+            directions: directions,
           }}
         />
       )}

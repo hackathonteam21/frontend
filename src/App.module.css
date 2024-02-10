@@ -1,6 +1,15 @@
 .wrapper {
   text-align: center;
   width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  .map {
+    flex: 1;
+  }
+  .side {
+    width: 300px;
+  }
 }
 
 .input {

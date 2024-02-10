@@ -1,12 +1,42 @@
-import { createContext, ReactNode, useState } from "react";
-import { PersonData } from "./types";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
+
+type Position = {
+  name: string;
+  address: string;
+  location: { lat: number; lng: number };
+};
+
+type Route = Position[];
 
 export const RouteContext = createContext<
-  [PersonData[], (addresses: PersonData[]) => void] | undefined
+  [Route, Dispatch<SetStateAction<Route>>] | undefined
+>(undefined);
+
+type Settings = {
+  origin?: Position;
+  destination?: Position;
+};
+
+export const SettingsContext = createContext<
+  [Settings, Dispatch<SetStateAction<Settings>>] | undefined
 >(undefined);
 export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
-  const routeState = useState<PersonData[]>([]);
+  const routeState = useState<Route>([]);
+  const settingsState = useState<Settings>({
+    origin: undefined,
+    destination: undefined,
+  });
   return (
-    <RouteContext.Provider value={routeState}>{children}</RouteContext.Provider>
+    <SettingsContext.Provider value={settingsState}>
+      <RouteContext.Provider value={routeState}>
+        {children}
+      </RouteContext.Provider>
+    </SettingsContext.Provider>
   );
 };

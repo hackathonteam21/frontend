@@ -1,7 +1,7 @@
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import styles from "./map.module.scss";
 
 import Direction from "./Direction";
+import styles from "./map.module.scss";
 
 const center = {
   lat: -3.745,

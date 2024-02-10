@@ -1,5 +1,5 @@
 import { DirectionsRenderer, DirectionsService } from "@react-google-maps/api";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect } from "react";
 
 import { TLocation } from "../@types/location";
 
@@ -13,6 +13,7 @@ type TProps = {
   transitPoints: TLocation[];
   directions?: google.maps.DirectionsResult;
   setDirections: (direction: google.maps.DirectionsResult) => void;
+  routeRender: HTMLDivElement | null;
 };
 
 const Direction: FC<TProps> = ({
@@ -21,6 +22,7 @@ const Direction: FC<TProps> = ({
   transitPoints: _transitPoints,
   directions,
   setDirections,
+  routeRender,
 }) => {
   const transitPoints: google.maps.DirectionsWaypoint[] = _transitPoints.map(
     (point) => ({ location: point }),
@@ -45,6 +47,10 @@ const Direction: FC<TProps> = ({
     [directions],
   );
 
+  useEffect(() => {
+    if (routeRender) routeRender.innerHTML = "";
+  }, [directions]);
+
   return (
     <>
       <DirectionsService
@@ -61,6 +67,7 @@ const Direction: FC<TProps> = ({
         <DirectionsRenderer
           options={{
             directions: directions,
+            panel: routeRender,
           }}
         />
       )}

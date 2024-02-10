@@ -1,10 +1,12 @@
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 import { RouteContext, SettingsContext } from "../context.tsx";
 import { Direction } from "./direction";
 import styles from "./map.module.scss";
-import { RouteRenderer } from "./route.tsx";
+
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 const center = {
   lat: 35.6812362,
@@ -22,12 +24,12 @@ const MainMap = () => {
   const [direction, setDirection] = useState<
     google.maps.DirectionsResult | undefined
   >(undefined);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const routeRenderRef = useRef<HTMLDivElement>(null);
   if (!isLoaded || !routeContext || !settingContext)
     return <div>loading...</div>;
   const [route] = routeContext;
   const [settings] = settingContext;
-
-  console.log(direction?.routes[0]);
 
   return (
     <div className={styles.wrapper}>
@@ -40,12 +42,19 @@ const MainMap = () => {
               destination={settings.destination.location}
               directions={direction}
               setDirections={setDirection}
+              routeRender={routeRenderRef.current}
             />
           )}
         </GoogleMap>
+        <button
+          className={styles.toggle}
+          onClick={() => setIsSidebarOpen((pv) => !pv)}
+        >
+          {isSidebarOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </button>
       </div>
-      <aside className={styles.side}>
-        {direction && <RouteRenderer route={direction.routes[0]} />}
+      <aside className={`${styles.side} ${isSidebarOpen && styles.open}`}>
+        <div ref={routeRenderRef}></div>
       </aside>
     </div>
   );

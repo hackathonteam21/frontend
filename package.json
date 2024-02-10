@@ -16,7 +16,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@here/maps-api-for-javascript": "^1.50.0",
+    "@react-google-maps/api": "^2.19.2",
+    "google-map-react": "^2.2.1",
+    "jotai": "^2.6.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.70.0"

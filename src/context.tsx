@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 
 type Position = {
   name: string;
@@ -9,7 +15,7 @@ type Position = {
 type Route = Position[];
 
 export const RouteContext = createContext<
-  [Route, (route: Route) => void] | undefined
+  [Route, Dispatch<SetStateAction<Route>>] | undefined
 >(undefined);
 
 type Settings = {
@@ -18,7 +24,7 @@ type Settings = {
 };
 
 export const SettingsContext = createContext<
-  [Settings, (settings: Settings) => void] | undefined
+  [Settings, Dispatch<SetStateAction<Settings>>] | undefined
 >(undefined);
 
 export const RouteContextProvider = ({ children }: { children: ReactNode }) => {

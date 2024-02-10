@@ -1,9 +1,9 @@
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { useContext } from "react";
 
+import { RouteContext, SettingsContext } from "../context.tsx";
 import { Direction } from "./direction";
 import styles from "./map.module.scss";
-import { useContext } from "react";
-import { RouteContext, SettingsContext } from "../context.tsx";
 
 const center = {
   lat: 35.6812362,

@@ -4,3 +4,5 @@ export type Position = {
   address: string;
   location: { lat: number; lng: number };
 };
+
+export type Route = Position[];

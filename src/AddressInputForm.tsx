@@ -39,17 +39,17 @@ export function AddressInputForm() {
           address,
           location: { lat, lng },
         };
-        const dbResponse = await fetch(postUrl, {
+        const apiResponse = await fetch(postUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(positionData),
         });
-        if (!dbResponse.ok) {
+        if (!apiResponse.ok) {
           throw new Error("データの送信に失敗しました。");
         }
-        const newAddress: Position = await dbResponse.json(); // データベースから返された新しいアドレスオブジェクトを想定
+        const newAddress: Position = await apiResponse.json();
         setAddressList((prevList) => [...prevList, newAddress]);
         alert("データを登録しました。");
         setName("");

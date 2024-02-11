@@ -10,7 +10,7 @@ export function AddressListDisplay() {
   const [addressList, setAddressList] = addressListContext;
   const routeContext = useContext(RouteContext);
   if (!routeContext) return;
-  const [selectedAddresses, setSelectedAddresses] = routeContext;
+  const [currentRoute, setCurrentRoute] = routeContext;
 
   useEffect(() => {
     const fetchAddressData = async () => {
@@ -59,7 +59,7 @@ export function AddressListDisplay() {
   };
 
   const handleConfirmClick = () => {
-    setSelectedAddresses(selectedPositions);
+    setCurrentRoute(selectedPositions);
     setSelectedPositions([]);
   };
 

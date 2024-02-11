@@ -32,6 +32,10 @@ export const AddressListContext = createContext<
   [Position[], Dispatch<SetStateAction<Position[]>>] | undefined
 >(undefined);
 
+export const PrevRoutesListContext = createContext<
+  [Route[], Dispatch<SetStateAction<Route[]>>] | undefined
+>(undefined);
+
 export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
   const routeState = useState<Route>([]);
   const settingsState = useState<Settings>({
@@ -39,11 +43,14 @@ export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
     destination: undefined,
   });
   const addressListState = useState<Position[]>([]);
+  const prevRoutesListState = useState<Route[]>([]);
   return (
     <SettingsContext.Provider value={settingsState}>
       <RouteContext.Provider value={routeState}>
         <AddressListContext.Provider value={addressListState}>
-          {children}
+          <PrevRoutesListContext.Provider value={prevRoutesListState}>
+            {children}
+          </PrevRoutesListContext.Provider>
         </AddressListContext.Provider>
       </RouteContext.Provider>
     </SettingsContext.Provider>

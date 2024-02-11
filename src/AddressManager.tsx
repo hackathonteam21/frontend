@@ -1,11 +1,11 @@
 import { AddressInputForm } from "./AddressInputForm";
 import { AddressListDisplay } from "./AddressListDisplay";
-import { SelectedAddressList } from "./SelectedAddressList";
+import { CurrentRoute } from "./CurrentRoute";
 
 export default function AddressManager() {
   return (
     <>
-      <SelectedAddressList />
+      <CurrentRoute />
       <AddressInputForm />
       <AddressListDisplay />
     </>

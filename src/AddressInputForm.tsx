@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./App.module.css";
+import { AddressListContext } from "./context";
+import { Position } from "./types";
 
 type PositionForPost = {
   name: string;
@@ -10,6 +12,9 @@ type PositionForPost = {
 export function AddressInputForm() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
+  const addressListContext = useContext(AddressListContext);
+  if (!addressListContext) return;
+  const [addressList, setAddressList] = addressListContext;
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -44,6 +49,8 @@ export function AddressInputForm() {
         if (!dbResponse.ok) {
           throw new Error("データの送信に失敗しました。");
         }
+        const newAddress: Position = await dbResponse.json(); // データベースから返された新しいアドレスオブジェクトを想定
+        setAddressList((prevList) => [...prevList, newAddress]);
         alert("データを登録しました。");
         setName("");
         setAddress("");

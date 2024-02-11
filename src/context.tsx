@@ -59,7 +59,26 @@ export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
       location: { lat: 35.6591083, lng: 139.7036861 },
     },
   });
-  const addressListState = useState<Position[]>([]);
+  const addressListState = useState<Position[]>([
+    {
+      id: 0,
+      name: "Tokyo",
+      address: "Tokyo",
+      location: { lat: 35.7080452, lng: 139.5394365 },
+    },
+    {
+      id: 1,
+      name: "Tokyo",
+      address: "Tokyo",
+      location: { lat: 35.6812362, lng: 139.7645445 },
+    },
+    {
+      id: 2,
+      name: "Shibuya",
+      address: "Shibuya",
+      location: { lat: 35.6591083, lng: 139.7036861 },
+    },
+  ]);
   const prevRoutesListState = useState<Route[]>([]);
   return (
     <SettingsContext.Provider value={settingsState}>

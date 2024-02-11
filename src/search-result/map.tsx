@@ -30,6 +30,27 @@ const MainMap = () => {
   const [route] = routeContext;
   const [settings] = settingContext;
 
+  const updateDirection = (val: google.maps.DirectionsResult) => {
+    setDirection(val);
+    // void (async () => {
+    //   if (!settings.origin || !settings.destination) return;
+    //   const formData = new FormData();
+    //   formData.append("start_point", `${settings.origin.id}`);
+    //   formData.append("end_point", `${settings.destination.id}`);
+    //   for (const point of route){
+    //     formData.append("waypoint", `${point.id}`);
+    //   }
+    //
+    //   const req = await fetch(`${import.meta.env.VITE_API_URL}/route`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(val),
+    //   });
+    // })();
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.map}>
@@ -40,7 +61,7 @@ const MainMap = () => {
               transitPoints={route.map((pos) => pos.location)}
               destination={settings.destination.location}
               directions={direction}
-              setDirections={setDirection}
+              setDirections={updateDirection}
               routeRender={routeRenderRef.current}
             />
           )}

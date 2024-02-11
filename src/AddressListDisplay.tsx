@@ -72,17 +72,17 @@ export function AddressListDisplay() {
             <div>
               <span>{item.name}</span>
               <span style={{ marginLeft: "30px" }}>{item.address}</span>
-              <input
-                type="checkbox"
-                onChange={(e) => handleCheckboxChange(item, e.target.checked)}
-              />
-              <button
-                className={`${styles.button} ${styles.deleteButton}`}
-                onClick={() => handleRemovePosition(index)}
-              >
-                削除
-              </button>
             </div>
+            <input
+              type="checkbox"
+              onChange={(e) => handleCheckboxChange(item, e.target.checked)}
+            />
+            <button
+              className={`${styles.button} ${styles.deleteButton}`}
+              onClick={() => handleRemovePosition(item.id)}
+            >
+              削除
+            </button>
           </li>
         ))}
       </ul>

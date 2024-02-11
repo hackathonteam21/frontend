@@ -1,12 +1,11 @@
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { useContext, useRef, useState } from "react";
 
 import { RouteContext, SettingsContext } from "../context.tsx";
 import { Direction } from "./direction";
 import styles from "./map.module.scss";
-
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 const center = {
   lat: 35.6812362,

@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
+
 import styles from "./App.module.css";
 import { AddressListContext } from "./context";
 import { Position } from "./types";
@@ -14,7 +15,7 @@ export function AddressInputForm() {
   const [address, setAddress] = useState("");
   const addressListContext = useContext(AddressListContext);
   if (!addressListContext) return;
-  const [addressList, setAddressList] = addressListContext;
+  const [, setAddressList] = addressListContext;
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);

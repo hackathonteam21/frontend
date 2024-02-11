@@ -1,16 +1,12 @@
-import styles from "./App.module.css";
 import { useContext, useEffect } from "react";
-import { RouteContext, PrevRoutesListContext } from "./context";
-import { Route, Position } from "./types";
+
+import styles from "./App.module.css";
+import { PrevRoutesListContext, RouteContext } from "./context";
+import { Position, Route } from "./types";
 
 export function PrevRoutesList() {
   const context = useContext(RouteContext);
-  if (!context) return null;
-  const [currentRoute, setCurrentRoute] = context;
   const prevRoutesListContext = useContext(PrevRoutesListContext);
-  if (!prevRoutesListContext) return;
-  const [prevRoutesList, setPrevRoutesList] = prevRoutesListContext;
-
   useEffect(() => {
     const fetchPrevRoutes = async () => {
       const apiUrl = "APIのURLを挿入";
@@ -20,7 +16,7 @@ export function PrevRoutesList() {
           throw new Error("データの取得に失敗しました。");
         }
         const data: Route[] = await response.json();
-        setPrevRoutesList(data);
+        prevRoutesListContext?.[1](data);
       } catch (error) {
         console.error("データ取得中にエラーが発生しました:", error);
       }
@@ -28,6 +24,10 @@ export function PrevRoutesList() {
 
     fetchPrevRoutes();
   }, []);
+  if (!prevRoutesListContext) return;
+  if (!context) return null;
+  const [prevRoutesList] = prevRoutesListContext;
+  const [, setCurrentRoute] = context;
 
   return (
     <div className={styles.container}>

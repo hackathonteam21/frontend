@@ -1,12 +1,12 @@
-import styles from "./App.module.css";
 import { useContext } from "react";
+
+import styles from "./App.module.css";
 import { RouteContext } from "./context";
-import { Position, Route } from "./types";
 
 export function CurrentRoute() {
   const context = useContext(RouteContext);
   if (!context) return;
-  const [currentRoute, setCurrentRoute] = context;
+  const [currentRoute] = context;
 
   return (
     <div className={styles.container}>

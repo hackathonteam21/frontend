@@ -1,4 +1,5 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+
 import styles from "./App.module.css";
 import { AddressListContext, RouteContext } from "./context";
 import { Position } from "./types";
@@ -6,12 +7,7 @@ import { Position } from "./types";
 export function AddressListDisplay() {
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]); //チェックボックス
   const addressListContext = useContext(AddressListContext);
-  if (!addressListContext) return;
-  const [addressList, setAddressList] = addressListContext;
   const routeContext = useContext(RouteContext);
-  if (!routeContext) return;
-  const [currentRoute, setCurrentRoute] = routeContext;
-
   useEffect(() => {
     const fetchAddressData = async () => {
       const apiUrl = "APIのURLを挿入";
@@ -21,7 +17,7 @@ export function AddressListDisplay() {
           throw new Error("データの取得に失敗しました。");
         }
         const data: Position[] = await response.json();
-        setAddressList(data);
+        addressListContext?.[1](data);
       } catch (error) {
         console.error("データ取得中にエラーが発生しました:", error);
       }
@@ -29,13 +25,17 @@ export function AddressListDisplay() {
 
     fetchAddressData();
   }, []);
+  if (!routeContext) return;
+  if (!addressListContext) return;
+  const [addressList, setAddressList] = addressListContext;
+  const [, setCurrentRoute] = routeContext;
 
   const handleCheckboxChange = (position: Position, isChecked: boolean) => {
     if (isChecked) {
       setSelectedPositions((prevPositions) => [...prevPositions, position]);
     } else {
       setSelectedPositions((prevPositions) =>
-        prevPositions.filter((prevPosition) => prevPosition !== position)
+        prevPositions.filter((prevPosition) => prevPosition !== position),
       );
     }
   };
@@ -51,7 +51,7 @@ export function AddressListDisplay() {
       }
       setAddressList((prevData) => prevData.filter((item) => item.id !== id));
       setSelectedPositions((prevPositions) =>
-        prevPositions.filter((item) => item.id !== id)
+        prevPositions.filter((item) => item.id !== id),
       );
     } catch (error) {
       console.error("データ削除中にエラーが発生しました:", error);

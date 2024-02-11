@@ -25,7 +25,7 @@ const PointMap = ({
   useEffect(() => {
     setTimeout(() => {
       setInit(true);
-    }, 100);
+    }, 1000);
   }, []);
   if (!isLoaded || !routeContext || !addressListContext)
     return <div>loading...</div>;

@@ -37,14 +37,7 @@ export const PrevRoutesListContext = createContext<
 >(undefined);
 
 export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
-  const routeState = useState<Route>([
-    {
-      id: 0,
-      name: "Tokyo",
-      address: "Tokyo",
-      location: { lat: 35.7080452, lng: 139.5394365 },
-    },
-  ]);
+  const routeState = useState<Route>([]);
   const settingsState = useState<Settings>({
     origin: {
       id: 1,

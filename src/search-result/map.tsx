@@ -27,7 +27,7 @@ const MainMap = () => {
   const routeRenderRef = useRef<HTMLDivElement>(null);
   if (!isLoaded || !routeContext || !settingContext)
     return <div>loading...</div>;
-  const [route] = routeContext;
+  const [route, setRoute] = routeContext;
   const [settings] = settingContext;
 
   const updateDirection = (val: google.maps.DirectionsResult) => {
@@ -74,6 +74,10 @@ const MainMap = () => {
         </button>
       </div>
       <aside className={`${styles.side} ${isSidebarOpen && styles.open}`}>
+        <div onClick={() => setRoute([])} className={styles.close}>
+          <ChevronLeftIcon />
+          戻る
+        </div>
         <div ref={routeRenderRef}></div>
       </aside>
     </div>

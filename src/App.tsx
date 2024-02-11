@@ -1,7 +1,7 @@
-import { MainMap } from "./map/map.tsx";
+import { SearchResultPage } from "./search-result";
 
 function App() {
-  return <MainMap />;
+  return <SearchResultPage />;
 }
 
 export default App;

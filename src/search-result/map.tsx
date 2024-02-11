@@ -27,8 +27,29 @@ const MainMap = () => {
   const routeRenderRef = useRef<HTMLDivElement>(null);
   if (!isLoaded || !routeContext || !settingContext)
     return <div>loading...</div>;
-  const [route] = routeContext;
+  const [route, setRoute] = routeContext;
   const [settings] = settingContext;
+
+  const updateDirection = (val: google.maps.DirectionsResult) => {
+    setDirection(val);
+    // void (async () => {
+    //   if (!settings.origin || !settings.destination) return;
+    //   const formData = new FormData();
+    //   formData.append("start_point", `${settings.origin.id}`);
+    //   formData.append("end_point", `${settings.destination.id}`);
+    //   for (const point of route){
+    //     formData.append("waypoint", `${point.id}`);
+    //   }
+    //
+    //   const req = await fetch(`${import.meta.env.VITE_API_URL}/route`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(val),
+    //   });
+    // })();
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -40,7 +61,7 @@ const MainMap = () => {
               transitPoints={route.map((pos) => pos.location)}
               destination={settings.destination.location}
               directions={direction}
-              setDirections={setDirection}
+              setDirections={updateDirection}
               routeRender={routeRenderRef.current}
             />
           )}
@@ -53,6 +74,10 @@ const MainMap = () => {
         </button>
       </div>
       <aside className={`${styles.side} ${isSidebarOpen && styles.open}`}>
+        <div onClick={() => setRoute([])} className={styles.close}>
+          <ChevronLeftIcon />
+          戻る
+        </div>
         <div ref={routeRenderRef}></div>
       </aside>
     </div>

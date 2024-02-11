@@ -1,7 +1,7 @@
 import { DirectionsRenderer, DirectionsService } from "@react-google-maps/api";
 import { FC, useCallback, useEffect } from "react";
 
-import { TLocation } from "../@types/location";
+import { TLocation } from "@/@types/location";
 
 const isApiResponseOk = (i: unknown) => {
   return (i as { status: string })?.status === "OK";

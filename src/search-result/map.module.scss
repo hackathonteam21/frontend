@@ -23,7 +23,14 @@
     overflow-y: scroll;
     display: none;
     &.open {
-      display: block;
+      display: flex;
+      flex-direction: column;
+    }
+    .close {
+      display: flex;
+      justify-content: flex-start;
+      padding: 10px;
+      background-color: #fff;
     }
   }
 }

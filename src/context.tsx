@@ -7,6 +7,7 @@ import {
 } from "react";
 
 type Position = {
+  id: number;
   name: string;
   address: string;
   location: { lat: number; lng: number };
@@ -25,6 +26,14 @@ type Settings = {
 
 export const SettingsContext = createContext<
   [Settings, Dispatch<SetStateAction<Settings>>] | undefined
+>(undefined);
+
+export const AddressListContext = createContext<
+  [Position[], Dispatch<SetStateAction<Position[]>>] | undefined
+>(undefined);
+
+export const PrevRoutesListContext = createContext<
+  [Route[], Dispatch<SetStateAction<Route[]>>] | undefined
 >(undefined);
 
 export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
@@ -47,10 +56,16 @@ export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
       location: { lat: 35.6591083, lng: 139.7036861 },
     },
   });
+  const addressListState = useState<Position[]>([]);
+  const prevRoutesListState = useState<Route[]>([]);
   return (
     <SettingsContext.Provider value={settingsState}>
       <RouteContext.Provider value={routeState}>
-        {children}
+        <AddressListContext.Provider value={addressListState}>
+          <PrevRoutesListContext.Provider value={prevRoutesListState}>
+            {children}
+          </PrevRoutesListContext.Provider>
+        </AddressListContext.Provider>
       </RouteContext.Provider>
     </SettingsContext.Provider>
   );

@@ -28,10 +28,24 @@ export const SettingsContext = createContext<
 >(undefined);
 
 export const RouteContextProvider = ({ children }: { children: ReactNode }) => {
-  const routeState = useState<Route>([]);
+  const routeState = useState<Route>([
+    {
+      name: "Tokyo",
+      address: "Tokyo",
+      location: { lat: 35.7080452, lng: 139.5394365 },
+    },
+  ]);
   const settingsState = useState<Settings>({
-    origin: undefined,
-    destination: undefined,
+    origin: {
+      name: "Tokyo",
+      address: "Tokyo",
+      location: { lat: 35.6812362, lng: 139.7645445 },
+    },
+    destination: {
+      name: "Shibuya",
+      address: "Shibuya",
+      location: { lat: 35.6591083, lng: 139.7036861 },
+    },
   });
   return (
     <SettingsContext.Provider value={settingsState}>
